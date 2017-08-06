@@ -18,17 +18,18 @@ vid_names = {}
 
 def new_url(SCRAPE_URL, loaded):
     """
-    Creates a new url by appending loaded, an int, to the original url.
-    loaded denotes how far the bot has read through the thread (0 by default).
+    Creates a new url by appending loaded, an int, to the 
+    original url. loaded denotes how far the bot has read 
+    through the thread (0 by default).
 
     Proceeds to load the page and check if the link is valid.
-    loaded is then incremented by 26, ensuring that the next load will be unread content
+    loaded is then incremented by 26, ensuring that the next 
+    load will be unread content
     """
     new_url = str(SCRAPE_URL) + str(loaded)
     thread_obj = requests.get(new_url)
     soup = BeautifulSoup(thread_obj.text, "html.parser")
 
-    #Checks for 404. (TODO: should distinguish between 404 and 503?)
     try:
         thread_obj.raise_for_status()
         print('Loaded', SCRAPE_URL + str(loaded))
@@ -41,8 +42,10 @@ def new_url(SCRAPE_URL, loaded):
         print('Videos found:')
         for element in elements:
             vid_ids.append(element.get('data-youtube-id'))
-            #vid_names[element.get('data-youtube-id')] = element.get('data-youtube-title')
-            print(element.get('data-youtube-title'), '(' + element.get('data-youtube-id') + ')')
+            #vid_names[element.get('data-youtube-id')] \
+                    #= element.get('data-youtube-title')
+            print(element.get('data-youtube-title'), '(' \
+                    + element.get('data-youtube-id') + ')')
     else:
         print('No videos found!')
         

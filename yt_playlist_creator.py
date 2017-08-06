@@ -40,11 +40,13 @@ def playlist_from_file(infile):
         browser.switch_to_default_content() #Return from iframe
         vid_url = 'https://www.youtube.com/watch?v=' + line
 
-        add_video = browser.find_element_by_id('gh-playlist-add-video') # Loop returns here
+        # Loop returns here
+        add_video = browser.find_element_by_id('gh-playlist-add-video')
         add_video.click()
         time.sleep(3)
 
-        iframe_instance = browser.find_elements_by_tag_name('iframe')[2] # 3rd instance?
+        # 3rd instance?
+        iframe_instance = browser.find_elements_by_tag_name('iframe')[2] 
         browser.switch_to_frame(iframe_instance)
 
         # selects 'url' tab, to submit via url
@@ -61,8 +63,8 @@ def playlist_from_file(infile):
         add_button.click()
         try:
             WebDriverWait(browser, 2).until(EC.alert_is_present(),
-                                            'The video you selected no longer exists. ' +
-                                            'The owner may have removed it.')
+                    'The video you selected no longer exists. ' + 
+                    'The owner may have removed it.')
             alert = browser.switch_to.alert
             alert.accept()
             print('deleted:', line)
